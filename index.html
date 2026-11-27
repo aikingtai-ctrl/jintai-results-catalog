@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<script id="jt-unified-gate">(function(){
+var H='6e95ff3e55611d24803014d9de77b401f191f198f9372577e58f9aa2e51771d3';
+var k='jt_gate';
+function getSaved(){
+  try{if(location.hostname==='127.0.0.1'||location.hostname==='localhost'||location.protocol==='file:'||location.href.indexOf('jt_ok=6e95ff3e')!==-1){localStorage.setItem(k,H);sessionStorage.setItem(k,H);return true;}}catch(e){}
+  try{if(localStorage.getItem(k)===H)return true;}catch(e){}
+  try{if(sessionStorage.getItem(k)===H)return true;}catch(e){}
+  return false;
+}
+function saveOk(){
+  try{localStorage.setItem(k,H);}catch(e){}
+  try{sessionStorage.setItem(k,H);}catch(e){}
+}
+if(getSaved()){
+  document.documentElement.setAttribute('data-jt-ok','1');
+  return;
+}
+window.__JT_LOCKED__=true;
+var st=document.createElement('style');
+st.id='jt_gate_css';
+st.textContent='html:not([data-jt-ok="1"]) body{display:none!important}';
+document.documentElement.appendChild(st);
+document.documentElement.style.visibility='hidden';
+function shaPure(ascii){
+  function rr(v,a){return(v>>>a)|(v<<(32-a));}
+  var bytes=Array.from(new TextEncoder().encode(ascii)),i,j;
+  var bitLen=bytes.length*8;
+  bytes.push(0x80);
+  while((bytes.length%64)!==56)bytes.push(0);
+  var hi=Math.floor(bitLen/4294967296),lo=bitLen>>>0;
+  bytes.push((hi>>>24)&255,(hi>>>16)&255,(hi>>>8)&255,hi&255,(lo>>>24)&255,(lo>>>16)&255,(lo>>>8)&255,lo&255);
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H0=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  for(i=0;i<bytes.length;i+=64){
+    var W=new Array(64);
+    for(j=0;j<16;j++)W[j]=((bytes[i+j*4]<<24)|(bytes[i+j*4+1]<<16)|(bytes[i+j*4+2]<<8)|bytes[i+j*4+3])>>>0;
+    for(j=16;j<64;j++){
+      var s0=rr(W[j-15],7)^rr(W[j-15],18)^(W[j-15]>>>3);
+      var s1=rr(W[j-2],17)^rr(W[j-2],19)^(W[j-2]>>>10);
+      W[j]=(W[j-16]+s0+W[j-7]+s1)>>>0;
+    }
+    var a=H0[0],b=H0[1],c=H0[2],d=H0[3],e=H0[4],f=H0[5],g=H0[6],h=H0[7];
+    for(j=0;j<64;j++){
+      var S1=rr(e,6)^rr(e,11)^rr(e,25),ch=(e&f)^((~e)&g),t1=(h+S1+ch+K[j]+W[j])>>>0;
+      var S0=rr(a,2)^rr(a,13)^rr(a,22),maj=(a&b)^(a&c)^(b&c),t2=(S0+maj)>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+    }
+    H0[0]=(H0[0]+a)>>>0;H0[1]=(H0[1]+b)>>>0;H0[2]=(H0[2]+c)>>>0;H0[3]=(H0[3]+d)>>>0;
+    H0[4]=(H0[4]+e)>>>0;H0[5]=(H0[5]+f)>>>0;H0[6]=(H0[6]+g)>>>0;H0[7]=(H0[7]+h)>>>0;
+  }
+  return H0.map(function(x){return('00000000'+x.toString(16)).slice(-8);}).join('');
+}
+async function sha(s){
+  try{
+    if(window.crypto&&crypto.subtle&&typeof TextEncoder!=='undefined'){
+      var b=new TextEncoder().encode(s);
+      var d=await crypto.subtle.digest('SHA-256',b);
+      return Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+    }
+  }catch(e){}
+  return shaPure(s);
+}
+window.addEventListener('DOMContentLoaded',function(){
+  document.body.className='';
+  document.body.style.cssText='margin:0;background:#F5F6F0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px';
+  document.body.innerHTML='<div id="jt_lock_box" style="font:20pt/1.65 Microsoft YaHei,PingFang SC,sans-serif;padding:36px 28px;color:#203936;width:min(680px,100%);background:#fff;border:2px solid #156B58;border-radius:16px;text-align:center;box-shadow:0 10px 28px rgba(0,0,0,.08)"><div style="font-size:24pt;font-weight:800;color:#203936;margin-bottom:10px">金泰事情与成果总目录 · 云端同步版</div><div style="font-size:16pt;color:#536761;margin-bottom:24px">请输入金泰统一访问密码（与《全局秒搜驾驶舱》《会话总目录》通用，验证一次全站免密）</div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin:0 auto"><input id="jt_pw_box" type="password" placeholder="请输入访问密码" autocomplete="current-password" style="flex:1;min-width:210px;font:18pt Microsoft YaHei,sans-serif;padding:12px 16px;border:1.5px solid #9EB5AB;border-radius:10px;background:#fff;color:#203936"><button id="jt_pw_btn" type="button" style="font:bold 18pt Microsoft YaHei,sans-serif;padding:12px 28px;background:#156B58;color:#fff;border:none;border-radius:10px;cursor:pointer">验证进入</button></div><div id="jt_pw_err" style="font-size:15pt;color:#DC2626;min-height:28px;margin-top:12px"></div></div>';
+  document.documentElement.setAttribute('data-jt-ok','1');
+  document.documentElement.style.visibility='visible';
+  var inp=document.getElementById('jt_pw_box'),btn=document.getElementById('jt_pw_btn'),err=document.getElementById('jt_pw_err');
+  async function tryIn(){
+    var v=(inp.value||'').trim();
+    if(!v){err.textContent='请输入访问密码';return;}
+    var h=await sha(v);
+    if(h===H){saveOk();location.reload();}
+    else{err.textContent='密码不正确，请核对后重试';inp.value='';inp.focus();}
+  }
+  if(btn)btn.onclick=tryIn;
+  if(inp){
+    inp.onkeydown=function(e){if(e.key==='Enter')tryIn();};
+    setTimeout(function(){try{inp.focus();}catch(e){}},50);
+  }
+});
+})();</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>事情与成果总目录</title>
+<style>
+:root{color-scheme:light;--ink:#203936;--muted:#536761;--green:#156b58;--paper:#f5f6f0;--line:#d5ded5}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:28px/1.65 "Microsoft YaHei","PingFang SC",sans-serif}
+button,input,a{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}a{color:var(--green);text-underline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #af670c;outline-offset:5px}
+.layout{max-width:1820px;margin:auto;display:grid;grid-template-columns:275px minmax(0,1fr);min-height:100vh}.sidebar{padding:38px 22px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow:auto;background:#eef2e9}.brand{font-size:28px;font-weight:700;margin:0 0 35px}.brand small{display:block;font-size:21px;font-weight:400;color:var(--muted);margin-top:6px}.nav-label{color:var(--muted);font-size:23px;margin:30px 8px 12px}.category{display:flex;justify-content:space-between;gap:10px;width:100%;border:0;border-radius:10px;padding:13px 15px;background:transparent;text-align:left;color:var(--ink);font-size:26px;margin:6px 0}.category:hover{background:#e0e8dd}.category[aria-pressed=true]{background:var(--green);color:white}.category span:last-child{font-size:22px;align-self:center}.sidebar-note{font-size:22px;color:var(--muted);margin:35px 8px}.main{padding:42px 48px 55px;min-width:0}.header-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}.cockpit-link{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;background:#156b58;color:white;text-decoration:none;font-size:24px;font-weight:600;white-space:nowrap}.cockpit-link:hover{background:#115747}.eyebrow{color:var(--green);font-size:23px;margin:0 0 10px;letter-spacing:.08em}h1{font-size:44px;line-height:1.35;margin:0 0 14px;letter-spacing:-1px}.intro{color:var(--muted);margin:0 0 25px;font-size:28px}.stats{display:flex;gap:30px;flex-wrap:wrap;margin:22px 0 28px;padding:19px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:25px}.stats strong{font-size:34px;font-weight:600;margin-right:8px}.search-label{display:block;font-size:25px;margin-bottom:9px}.search{display:flex;gap:12px}.search input{width:100%;min-width:0;padding:15px 20px;background:white;border:1px solid #9eb5ab;border-radius:10px;color:var(--ink);font-size:28px}.clear{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 20px;color:var(--muted);white-space:nowrap;font-size:24px}.questions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 27px}.question{border:1px solid var(--line);border-radius:30px;background:transparent;padding:6px 17px;font-size:23px;color:var(--muted)}.question:hover{background:#e4ede2;color:var(--ink)}.controls-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.views,.sorts{display:flex;gap:12px;flex-wrap:wrap}.view{border:1px solid var(--line);background:white;padding:11px 23px;border-radius:10px;color:var(--ink);font-size:27px}.view[aria-pressed=true]{background:var(--ink);color:white;border-color:var(--ink)}.sort-btn{border:1px solid var(--line);background:white;padding:10px 18px;border-radius:10px;color:var(--muted);font-size:23px}.sort-btn[aria-pressed=true]{background:#e4ede2;color:var(--ink);border-color:#9eb5ab;font-weight:600}.result-bar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin:27px 0 15px;font-size:24px;color:var(--muted)}.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}.card{min-width:0;background:white;border:1px solid var(--line);border-radius:15px;padding:26px 28px 24px}.card-top{display:flex;flex-wrap:wrap;gap:10px;font-size:22px;color:var(--muted);margin-bottom:12px;align-items:center}.date-tag{border-radius:6px;padding:2px 9px;background:#eef3ee;color:#3d5750;font-size:21px}.badge{border-radius:6px;padding:2px 9px;background:#eaf2e8;color:#286147}.badge.pending{background:#fff0d4;color:#785516}.card h2{font-size:30px;line-height:1.45;margin:0 0 15px;overflow-wrap:anywhere}.summary{font-size:27px;line-height:1.75;margin:0 0 19px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.inline-code{background:#edf2ec;color:#1b3b34;padding:1px 7px;border-radius:6px;font-size:.9em;font-family:"Consolas","Microsoft YaHei",monospace;word-break:break-all}.note-link{font-size:25px;font-weight:600}.card details{margin-top:20px;padding-top:15px;border-top:1px solid var(--line);font-size:25px;overflow-wrap:anywhere}.card summary{cursor:pointer;color:var(--green)}.detail-title{font-weight:600;font-size:25px;margin:18px 0 6px}.detail-text{font-size:26px;margin:0;color:var(--muted);overflow-wrap:anywhere}.asset{padding:12px 0;border-bottom:1px solid #edf0ea}.asset a{display:block;font-size:26px;overflow-wrap:anywhere}.asset small{font-size:22px;display:block;color:var(--muted)}.path-toggle{border:0;background:transparent;color:var(--green);padding:3px 0;font-size:22px;text-decoration:underline}.file-path{font:20px/1.65 "Microsoft YaHei",sans-serif;overflow-wrap:anywhere;white-space:pre-wrap;background:#f0f3ef;padding:12px;border-radius:6px;margin:8px 0}.source-thread{margin-top:12px}.copy{font-size:23px;padding:7px 13px;border:1px solid var(--line);border-radius:7px;background:#f5f7f2;color:var(--ink)}.source-thread code{display:block;font-size:20px;margin-top:8px;overflow-wrap:anywhere}.warning{font-size:24px;color:#785516;background:#fff4df;padding:12px;margin:15px 0}.empty{padding:45px 24px;background:white;border:1px dashed #a2b6a9;border-radius:12px;grid-column:1/-1}.empty h2{font-size:31px;margin-top:0}.empty p{font-size:27px}.footer{margin-top:40px;border-top:1px solid var(--line);padding-top:23px;font-size:23px;color:var(--muted)}.footer p{margin:10px 0}.footer details{margin-top:18px}.footer summary{cursor:pointer}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);padding:12px 24px;background:#203936;color:white;border-radius:10px;font-size:25px;z-index:3}.missing{color:#87501b}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.view-lead{font-size:24px;line-height:1.4;margin:12px 0 6px;color:var(--green)}.pending-lead{font-size:27px;line-height:1.65;margin:0 0 18px;overflow-wrap:anywhere}.asset-list{margin:0 0 18px}.match-hint{font-size:23px;line-height:1.55;margin:0 0 15px;padding:9px 12px;background:#eef3ee;border-radius:7px;overflow-wrap:anywhere}.match-hint a{font-weight:600}
+@media(max-width:1400px){.results{grid-template-columns:1fr}.main{padding:32px 35px}.summary{-webkit-line-clamp:3}}
+@media(max-width:800px){.layout{display:block}.sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:18px 20px}.brand{margin:0 0 15px}.brand small,.nav-label,.sidebar-note{display:none}#categories{display:flex;gap:8px;overflow-x:auto;padding-bottom:5px}.category{width:auto;flex-shrink:0;font-size:23px;padding:8px 12px}.category span:last-child{font-size:20px}.main{padding:26px 20px}h1{font-size:36px}.intro{font-size:27px}.cockpit-link{font-size:22px;padding:9px 15px;white-space:normal;max-width:100%}.stats{gap:15px;font-size:23px}.stats strong{font-size:29px}.search input{font-size:25px;padding:13px}.clear{font-size:23px;padding:8px 13px}.card{padding:23px}.views,.sorts{gap:8px}.view{font-size:25px;padding:10px 14px}.sort-btn{font-size:21px;padding:8px 13px}.result-bar{font-size:23px;flex-wrap:wrap;gap:6px 16px}.questions{gap:8px}.question{font-size:22px}.summary{font-size:27px}.footer{font-size:23px}}
+@media print{.sidebar,.search,.questions,.views,.sorts,.clear,.copy,.path-toggle,.cockpit-link{display:none}.layout{display:block}.main{padding:0}.results{display:block}.card{break-inside:avoid;margin-bottom:20px}.summary{display:block}.footer{font-size:19pt}body{font-size:20pt}@page{size:A4;margin:14mm}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" aria-label="按领域浏览"><p class="brand">事情与成果<small>个人工作目录</small></p><p class="nav-label">按领域浏览</p><nav id="categories"></nav><p class="sidebar-note">先找到事情，<br>再看结论、成果<br>和下一步。</p></aside>
+<main class="main">
+<header>
+<div class="header-top">
+<div><p class="eyebrow">工作记录 · 集中入口</p><h1>之前做过的事，从这里找。</h1></div>
+<a class="cockpit-link" href="https://aikingtai-ctrl.github.io/jintai-global-cockpit/" target="_blank" rel="noopener">🚀 金泰全局秒搜驾驶舱 ↗</a>
+</div>
+<p class="intro">按事情浏览，直接找到结论、文件和待办。</p>
+<label for="search" class="search-label">也可以输入事情、遇到的问题或成果名称</label>
+<div class="search"><input id="search" type="search" placeholder="例如：电脑卡顿、河传、蓝胡子、C盘清理" autocomplete="off" autofocus><button class="clear" id="clear">重置</button></div>
+<div class="stats" id="stats"></div>
+</header>
+<div class="questions" aria-label="常见问题"><button class="question" data-query="电脑卡顿">电脑又卡了</button><button class="question" data-query="河传">河传教学项目组</button><button class="question" data-query="C盘清理">C盘空间清理</button><button class="question" data-query="蓝胡子">深水蓝胡子</button><button class="question" data-query="H3本地出片工作流">H3出片工作流</button><button class="question" data-query="桌面App超大会话历史导出">聊天记录找不到</button></div>
+<div class="controls-bar">
+<nav class="views" aria-label="选择查找内容"><button class="view" data-view="all" aria-pressed="true">全部事项</button><button class="view" data-view="assets" aria-pressed="false">找成果</button><button class="view" data-view="pending" aria-pressed="false">看待办</button></nav>
+<div class="sorts" aria-label="排序方式"><button class="sort-btn" data-sort="recent" aria-pressed="true">最新进展优先</button><button class="sort-btn" data-sort="order" aria-pressed="false">按领域台账顺序</button></div>
+</div>
+<div class="result-bar"><span id="result-count" role="status" aria-live="polite"></span><span id="active-group"></span></div>
+<section class="results" id="results" aria-label="事项列表"></section>
+<footer class="footer"><p id="coverage"></p><p id="update-mode"></p><p><a id="obsidian-home">在 Obsidian 中打开总目录 ↗</a></p><details><summary>目录怎样更新</summary><p>计划任务运行时会检查源记录变化；白天新增事项可双击同文件夹里的“更新目录.cmd”立即更新。已打开的页面按 F5 查看新内容。</p><p>这里收录共享项目索引全部条目，并从项目卡片及索引摘要中提取本地交付文件、产出目录与在线站点入口；仅本地路径检查存在性，自动更新不检测网址可达性。本机和内网服务入口需先运行对应服务。精校卡片若发生源记录变更会提示复核，“看待办”展示记录中提取的未决事项，继续前请打开来源核实。</p><p>“打开来源记录”需要本机 Obsidian。本地文件可直接打开，也可复制完整路径；网页入口可新标签直达或复制网址。</p></details></footer>
+</main></div><div id="toast" class="toast" role="status" hidden></div>
+<noscript><p>浏览版需要启用 JavaScript；也可直接打开 Obsidian 中“共享 / 事情与成果总目录”。</p></noscript>
+<script src="data/directory_data.js?v=1795745958"></script>
+<script>
+'use strict';
+(async function(){
+if(window.__JT_LOCKED__)return;
+async function decodeEncPayload(b64){
+  var b=atob(b64),n=b.length,k=new Uint8Array(32),u=new Uint8Array(n),i;
+  var H='6e95ff3e55611d24803014d9de77b401f191f198f9372577e58f9aa2e51771d3';
+  for(i=0;i<32;i++)k[i]=parseInt(H.slice(i*2,i*2+2),16);
+  for(i=0;i<n;i++)u[i]=b.charCodeAt(i)^k[i&31]^((i*31)&255);
+  var ds=new DecompressionStream('gzip');
+  var w=ds.writable.getWriter();w.write(u);w.close();
+  var txt=await new Response(ds.readable).text();
+  return JSON.parse(txt);
+}
+var data=null;
+try{data=await decodeEncPayload(window.DIRECTORY_DATA_ENC||'');}catch(e){console.error('Results decode error:',e);return;}
+const state={group:'全部领域',view:'all',sort:'recent',query:''};
+const $=id=>document.getElementById(id);
+const hasAssets=e=>e.assets.some(a=>a.exists);
+function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node}
+function link(text,url,newTab){const a=el('a','',text);a.href=url;if(newTab){a.target='_blank';a.rel='noopener'}return a}
+function obsidianHref(rel){return 'obsidian://open?vault='+encodeURIComponent('AI永久记忆')+'&file='+encodeURIComponent(rel)}
+function renderRich(parent,raw){
+  const text=String(raw||'').replace(/\*{4,}/g,'');
+  const tokenRe=/(\*\*(?:(?!\*\*).)+?\*\*|`[^`\n]+?`|\[\[[^\]\n]+?\]\])/g;
+  let last=0,m;
+  while((m=tokenRe.exec(text))!==null){
+    if(m.index>last)parent.append(document.createTextNode(text.slice(last,m.index)));
+    const tok=m[0];
+    if(tok.startsWith('**')&&tok.endsWith('**')){
+      parent.append(el('strong','',tok.slice(2,-2)));
+    }else if(tok.startsWith('`')&&tok.endsWith('`')){
+      parent.append(el('code','inline-code',tok.slice(1,-1)));
+    }else if(tok.startsWith('[[')&&tok.endsWith(']]')){
+      const inner=tok.slice(2,-2);
+      const parts=inner.split('|');
+      const target=parts[0].trim();
+      const label=(parts[1]||target.split('/').pop()||target).trim();
+      parent.append(link(label,obsidianHref(target),false));
+    }
+    last=tokenRe.lastIndex;
+  }
+  if(last<text.length)parent.append(document.createTextNode(text.slice(last)));
+}
+function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('toast').hidden=true,3000)}
+async function copy(text){try{if(navigator.clipboard){await navigator.clipboard.writeText(text)}else{const area=el('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();if(!ok)throw Error('copy')}toast('已复制')}catch{toast('请选中下方文字，按 Ctrl+C 复制')}}
+function fileAsset(asset){
+  const box=el('div','asset');
+  box.append(asset.exists?link(asset.label+' ↗',asset.url,true):el('p','missing',asset.label+'：原路径未找到'));
+  const service=asset.isWeb&&/^https?:\/\/(?:127\.0\.0\.1|localhost|172\.16\.)/i.test(asset.url);
+  box.append(el('small','',asset.kind+(service?' · 本机/内网服务需运行':asset.isWeb?' · 自动更新不检测可达性':'')));
+  const toggleLabel=asset.isWeb?'查看 / 复制网址':'查看 / 复制完整路径';
+  const copyLabel=asset.isWeb?'复制网址':'复制路径';
+  const button=el('button','path-toggle',toggleLabel);
+  button.type='button';
+  const panel=el('div');panel.hidden=true;
+  panel.append(el('pre','file-path',asset.path));
+  const c=el('button','copy',copyLabel);c.onclick=()=>copy(asset.path);
+  panel.append(c);
+  button.setAttribute('aria-expanded','false');
+  button.onclick=()=>{panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden))};
+  box.append(button,panel);
+  return box;
+}
+function card(entry){
+  const validAssets=entry.assets.filter(a=>a.exists);
+  const box=el('article','card'+(validAssets.length?' featured':''));
+  const top=el('div','card-top');
+  top.append(el('span','',entry.category));
+  if(entry.updatedDate)top.append(el('span','date-tag',entry.updatedDate));
+  if(validAssets.length)top.append(el('span','badge','有成果入口 ('+validAssets.length+')'));
+  if(entry.pending)top.append(el('span','badge pending','记录中有待办'));
+  box.append(top,el('h2','',entry.name));
+  if(state.view==='assets'){
+    box.append(el('h3','view-lead','成果入口'));
+    const list=el('div','asset-list');entry.assets.forEach(a=>list.append(fileAsset(a)));
+    box.append(list);
+  }else if(state.view==='pending'){
+    box.append(el('h3','view-lead','下一步 / 待确认'));
+    const lead=el('p','pending-lead');renderRich(lead,entry.pending);box.append(lead);
+  }else{
+    const sumEl=el('p','summary');renderRich(sumEl,entry.summary);box.append(sumEl);
+  }
+  const queryWords=state.query.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+  if(queryWords.length&&state.view!=='assets'){
+    const matchingAsset=validAssets.find(a=>queryWords.every(w=>(a.label+' '+a.path).toLocaleLowerCase().includes(w)));
+    if(matchingAsset){const hint=el('p','match-hint','匹配成果：');hint.append(link(matchingAsset.label+' ↗',matchingAsset.url,true));box.append(hint)}
+  }
+  if(queryWords.length&&state.view!=='pending'&&entry.pending&&queryWords.every(w=>entry.pending.toLocaleLowerCase().includes(w))){
+    const hint=el('p','match-hint','匹配待办：');renderRich(hint,entry.pending);box.append(hint);
+  }
+  if(entry.recordExists){const a=link('打开来源记录 ↗',entry.note,false);a.className='note-link';box.append(a)}
+  else box.append(el('p','missing','来源文件未找到'));
+  if(entry.stale)box.append(el('p','warning','来源记录已有变更，请核对最新结论。下方保留原核对基准日期。'));
+  const detail=el('details');
+  const detailSections=[];
+  if(state.view!=='assets'&&entry.assets.length)detailSections.push('成果');
+  if(state.view!=='pending'&&entry.pending)detailSections.push('待办');
+  const detailLabel='完整摘要'+(detailSections.length?'、'+detailSections.join('与'):'');
+  detail.append(el('summary','',detailLabel));
+  const fullTitle=el('p','detail-title','完整记录摘要');
+  const fullText=el('p','detail-text');renderRich(fullText,entry.summary);
+  detail.append(fullTitle,fullText);
+  if(entry.pending&&state.view!=='pending'){
+    const pTitle=el('p','detail-title','下一步 / 待确认');
+    const pText=el('p','detail-text');renderRich(pText,entry.pending);
+    detail.append(pTitle,pText);
+  }
+  if(entry.assets.length&&state.view!=='assets'){
+    detail.append(el('p','detail-title','成果入口'));
+    if(entry.verified)detail.append(el('p','detail-text','手工精校核对日：'+entry.verified));
+    entry.assets.forEach(a=>detail.append(fileAsset(a)));
+  }
+  if(entry.threads.length){
+    detail.append(el('p','detail-title','来源会话编号'));
+    entry.threads.forEach(t=>{
+      const row=el('div','source-thread');
+      row.append(el('div','detail-text',t.label),el('code','',t.id));
+      const b=el('button','copy','复制会话编号');b.onclick=()=>copy(t.id);
+      row.append(b);detail.append(row);
+    });
+  }
+  box.append(detail);
+  return box;
+}
+function containsAll(value,words){const text=String(value||'').toLocaleLowerCase();return words.every(w=>text.includes(w))}
+function searchRank(entry,words,phrase){
+  const title=entry.name.toLocaleLowerCase();
+  if(title===phrase)return 0;
+  if(title.startsWith(phrase))return 1;
+  if(containsAll(title,words))return 2;
+  if(entry.aliases.split('|').some(alias=>containsAll(alias,words)))return 3;
+  if(entry.assets.some(asset=>containsAll(asset.label,words)))return 4;
+  if(containsAll(entry.pending,words))return 5;
+  if(containsAll(entry.summary,words))return 6;
+  if(entry.assets.some(asset=>containsAll(asset.path,words)))return 7;
+  return 8;
+}
+function sortEntries(list,words,phrase){
+  return list.sort((a,b)=>{
+    if(state.sort==='recent'){
+      if(words.length){
+        const relevance=searchRank(a,words,phrase)-searchRank(b,words,phrase);
+        if(relevance!==0)return relevance;
+      }
+      const d=(b.updatedDate||'').localeCompare(a.updatedDate||'');
+      if(d!==0)return d;
+      const time=(b.updatedAt||'').localeCompare(a.updatedAt||'');
+      if(time!==0)return time;
+      const ha=Number(hasAssets(b))-Number(hasAssets(a));
+      if(ha!==0)return ha;
+    }
+    return (a.order||0)-(b.order||0);
+  });
+}
+function render(){
+  document.querySelectorAll('.category').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.group===state.group)));
+  document.querySelectorAll('.view').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===state.view)));
+  document.querySelectorAll('.sort-btn').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sort===state.sort)));
+  const words=state.query.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+  const selected=sortEntries(data.entries.filter(e=>(state.group==='全部领域'||e.category===state.group)&&(state.view!=='assets'||hasAssets(e))&&(state.view!=='pending'||e.pending)&&words.every(w=>[e.name,e.summary,e.pending,e.category,e.aliases,e.updatedDate,...e.assets.map(a=>a.label+' '+a.path)].join(' ').toLocaleLowerCase().includes(w))),words,words.join(' '));
+  $('results').replaceChildren(...selected.map(card));
+  if(!selected.length){
+    const empty=el('div','empty');
+    empty.append(el('h2','','没有找到匹配事项'),el('p','','试试更短的描述，或点击“重置”返回全部目录。尚未写入共享记录的聊天不会出现在这里。'));
+    $('results').append(empty);
+  }
+  $('result-count').textContent='显示 '+selected.length+' 项 / 共 '+data.entries.length+' 项';
+  $('active-group').textContent=state.group+(state.sort==='recent'?(words.length?' · 按匹配相关性与最新进展排序':' · 按最新进展排序'):' · 按台账顺序');
+}
+const groups=['全部领域',...data.groups];
+if(data.entries.some(e=>e.category==='其他事项'))groups.push('其他事项');
+groups.forEach(group=>{
+  const b=el('button','category');
+  b.dataset.group=group;
+  b.setAttribute('aria-pressed',String(group===state.group));
+  b.append(el('span','',group),el('span','',String(data.entries.filter(e=>group==='全部领域'||e.category===group).length)));
+  b.onclick=()=>{state.group=group;render()};
+  $('categories').append(b);
+});
+const assetEntriesCount=data.entries.filter(hasAssets).length;
+[['共享事项',data.entries.length],['有成果入口',assetEntriesCount],['含待办记录',data.entries.filter(e=>e.pending).length]].forEach(([label,count])=>{
+  const item=el('span');item.append(el('strong','',String(count)),document.createTextNode(label));$('stats').append(item);
+});
+$('search').oninput=e=>{state.query=e.target.value;render()};
+$('clear').onclick=()=>{state.group='全部领域';state.view='all';state.sort='recent';state.query='';$('search').value='';render()};
+document.querySelectorAll('.view').forEach(b=>b.onclick=()=>{state.view=b.dataset.view;render()});
+document.querySelectorAll('.sort-btn').forEach(b=>b.onclick=()=>{state.sort=b.dataset.sort;render()});
+document.querySelectorAll('.question').forEach(b=>b.onclick=()=>{state.group='全部领域';state.view='all';state.query=b.dataset.query;$('search').value=state.query;render()});
+$('coverage').textContent='目录更新：'+data.updated+'（北京时间） · 收录 '+data.entries.length+' 项共享记录，其中 '+assetEntriesCount+' 项含成果入口。本地路径已检查存在性，网页入口未检测可达性。';
+$('obsidian-home').href=data.home;
+$('update-mode').textContent=data.updateMode;
+render();
+})();
+</script></body></html>
